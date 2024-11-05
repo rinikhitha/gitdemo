@@ -1,0 +1,84 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> triplets = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        int n=nums.length;
+//Brute force approach
+//The brute-force method involves using three nested loops to check all possible triplets in the array.
+// 1.Iterate through each element and pick two other elements after it to form all possible triplets.
+// 2.Check if the sum of each triplet is zero.
+// 3.Use a set to store unique triplets to avoid duplicates.
+        for(int i=0;i<n-2;i++)
+        {
+            for(int j=i+1;j<n-1;j++)
+            {
+                for(int k=j+1;k<n;k++)
+                {
+                    if(nums[i]+nums[j]+nums[k]==0)
+                    {
+                        List<Integer> triplet = Arrays.asList(nums[i],nums[j],nums[k]);//We want to store each triplet as a list so we can add it to the triplets list later if it’s unique.
+                        Collections.sort(triplet);//Sorting the triplet ensures a consistent order (e.g., [1, 2, -3] and [-3, 1, 2] will both become [-3, 1, 2] after sorting).
+                        String key = triplet.toString();//We use the string representation as a unique "key" to check if we’ve seen this triplet before. //If triplet = [-3, 1, 2], then key = "[-3, 1, 2]".
+                        if(!seen.contains(key))//Since we’re storing triplets in sorted order as strings, every unique triplet has a unique string representation.
+                        {
+                            seen.add(key);// By adding key to seen, we ensure that if we encounter the same triplet again, we’ll skip it.
+                            triplets.add(triplet);//This stores the triplet in our output list of unique triplets that sum to zero.
+                        }
+                    }
+                }
+            }
+        }
+        return triplets;
+    }
+}
+
+
+Time Complexity : O(N^3) -> As we have used 3 loops
+Space complexity : O(N) -> for storing unique triplets in a set.
+
+
+=======================================================================================================================================
+
+Approach 2: Optimal Solution
+
+class Solution {
+
+    public List<List<Integer>> threeSum(int[] nums) {
+          if (nums == null || nums.length < 3) return new ArrayList<>();
+
+    // Sort the elements
+    Arrays.sort(nums);
+    Set<List<Integer>> result = new HashSet<>();
+
+    // Now fix the first element and find the other two elements
+    for (int i = 0; i < nums.length - 2; i++)
+    {
+      // Find other two elements using Two Sum approach
+      int left = i + 1;
+      int right = nums.length - 1;
+
+      while (left < right) {
+        int sum = nums[i] + nums[left] + nums[right];
+
+        if (sum == 0) {
+
+          // Add the set, and move to find other triplets
+          result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+          left++;
+          right--;
+        } else if (sum < 0)
+          left++;
+        else
+          right--;
+      }
+    }
+    return new ArrayList<>(result);
+  }
+}
+
+
+Time Complexity : O(N^2) because we have an outer loop that iterates N times, and for each iteration, we perform a two-pointer search in O(N).
+Space complexity : O(N) -> for storing unique triplets in a set.
+
+
+

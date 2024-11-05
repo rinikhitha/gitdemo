@@ -1,0 +1,30 @@
+//GeeksforGeeks 
+class Solution
+{
+    //Function to sort the array using bubble sort algorithm.
+	public static void bubbleSort(int arr[], int n)
+    {
+        //code here
+        int i,j,temp;
+        for(i=n-1;i>=1;i--)
+        {
+           boolean swapped = false;
+           for(j=0;j<i;j++)
+           {
+               if(arr[j+1]<arr[j])
+               {
+                   temp=arr[j+1];
+                   arr[j+1]=arr[j];
+                   arr[j]=temp;
+                   swapped = true;
+               }
+           }
+           if(swapped==false)
+        {
+            break;
+        }
+        }
+        
+        
+    }
+}

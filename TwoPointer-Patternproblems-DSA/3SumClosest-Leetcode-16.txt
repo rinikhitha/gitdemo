@@ -1,0 +1,79 @@
+// class Solution {
+//     public int threeSumClosest(int[] nums, int target) {
+//         //Bruteforce Approach
+//         int resultSum = nums[0] + nums[1] + nums[2]; // Initialize with the sum of the first three elements
+//         // Example: resultSum = -1 + 2 + 1 = 2
+//         int minDifference = Math.abs(resultSum - target); // Calculate the initial difference
+//         // Example: minDifference = Math.abs(2 - 1) = 1
+        
+//         for (int i = 0; i < nums.length - 2; i++) { // Loop to fix the first element of the triplet
+//             for (int j = i + 1; j < nums.length - 1; j++) { // Loop to fix the second element
+//                 for (int k = j + 1; k < nums.length; k++) { // Loop to fix the third element
+//                     int sum = nums[i] + nums[j] + nums[k]; // Calculate the sum of the current triplet
+//                     // Example iterations:
+//                     // 1. i=0, j=1, k=2: sum = -1 + 2 + 1 = 2
+//                     // 2. i=0, j=1, k=3: sum = -1 + 2 + -4 = -3
+//                     // 3. i=0, j=2, k=3: sum = -1 + 1 + -4 = -4
+//                     // 4. i=1, j=2, k=3: sum = 2 + 1 + -4 = -1
+                    
+//                     int diffToTarget = Math.abs(sum - target); // Calculate how close this sum is to the target
+//                     // Example for sum = 2: diffToTarget = Math.abs(2 - 1) = 1
+                    
+//                     if (diffToTarget < minDifference) { // Check if this sum is closer to target than previous closest
+//                         resultSum = sum; // Update resultSum if it's closer
+//                         minDifference = diffToTarget; // Update minDifference
+//                         // Example: After checking all iterations, the closest sum we found is 2 with diffToTarget = 1
+//                     }
+//                 }
+//             }
+//         }
+        
+//         return resultSum; // Return the sum that was closest to the target
+//         // Example: resultSum = 2
+//     }
+// }
+
+Time Complexity: O(N^3)
+Space Complexity: O(1)
+
+//==========================Optimal Approach i.e., Two pointer approach===============================================
+
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int resultSum = nums[0] + nums[1] + nums[2]; // Initialize with the sum of the first three elements
+        // Example: resultSum = -1 + 2 + 1 = 2
+        int minDifference = Math.abs(resultSum - target); // Calculate the initial difference
+        // Example: minDifference = Math.abs(2 - 1) = 1
+        
+        for (int i = 0; i < nums.length - 2; i++) { // Loop to fix the first element of the triplet
+            for (int j = i + 1; j < nums.length - 1; j++) { // Loop to fix the second element
+                for (int k = j + 1; k < nums.length; k++) { // Loop to fix the third element
+                    int sum = nums[i] + nums[j] + nums[k]; // Calculate the sum of the current triplet
+                    // Example iterations:
+                    // 1. i=0, j=1, k=2: sum = -1 + 2 + 1 = 2
+                    // 2. i=0, j=1, k=3: sum = -1 + 2 + -4 = -3
+                    // 3. i=0, j=2, k=3: sum = -1 + 1 + -4 = -4
+                    // 4. i=1, j=2, k=3: sum = 2 + 1 + -4 = -1
+                    
+                    int diffToTarget = Math.abs(sum - target); // Calculate how close this sum is to the target
+                    // Example for sum = 2: diffToTarget = Math.abs(2 - 1) = 1
+                    
+                    if (diffToTarget < minDifference) { // Check if this sum is closer to target than previous closest
+                        resultSum = sum; // Update resultSum if it's closer
+                        minDifference = diffToTarget; // Update minDifference
+                        // Example: After checking all iterations, the closest sum we found is 2 with diffToTarget = 1
+                    }
+                }
+            }
+        }
+        
+        return resultSum; // Return the sum that was closest to the target
+        // Example: resultSum = 2
+    }
+}
+
+Time Complexity : O(N^2)
+Sorting the array takes a time complexity of O(NlogN) and also the 2 pointer takes O(N^2) as O(N^2) dominates O(NlogN) we consider O(N^2)
+Space Complexity : After sorting, we only use a few extra variables, so the space complexity is O(1)
+Sorting an array takes a space complexity of O(N)
+overall space complexity becomes O(N)

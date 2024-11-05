@@ -1,0 +1,44 @@
+class Solution {
+
+    void mergeSort(int arr[], int l, int r) {
+        // code here
+        if(l<r)
+        {
+            int m=(l+r)/2;
+            mergeSort(arr,l,m);
+            mergeSort(arr,m+1,r);
+            merge(arr,l,m,r);
+        }
+    }
+    
+    void merge(int arr[], int l, int m, int r) {
+    int temp[] = new int[r - l + 1]; // Create a temp array with the required length
+    int left = l;
+    int right = m + 1;
+    int k = 0; // Index for the temp array
+
+    // Merge the two halves into temp array
+    while (left <= m && right <= r) {
+        if (arr[left] <= arr[right]) {
+            temp[k++] = arr[left++];
+        } else {
+            temp[k++] = arr[right++];
+        }
+    }
+
+    // Copy remaining elements from the left half, if any
+    while (left <= m) {
+        temp[k++] = arr[left++];
+    }
+
+    // Copy remaining elements from the right half, if any
+    while (right <= r) {
+        temp[k++] = arr[right++];
+    }
+
+    // Copy the merged elements back into the original array
+    for (int i = 0; i < temp.length; i++) {
+        arr[l + i] = temp[i];
+    }
+}
+}

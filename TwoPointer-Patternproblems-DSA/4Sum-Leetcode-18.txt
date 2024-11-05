@@ -1,0 +1,92 @@
+//Brute force : List all sub arrays and check the condistion such that their sum is equal to target then add them as list and sort them
+//to not get any duplicate list of quadruplet convert the list in to key so as to compare the future list element quadruplets
+// class Solution {
+//     public List<List<Integer>> fourSum(int[] nums, int target) {
+//            List<List<Integer>> quadruplets = new ArrayList<>();
+//            Set<String> seen = new HashSet<>();
+//            int n=nums.length;
+
+//         for(int i=0;i<n-3;i++)
+//         {
+//             for(int j=i+1;j<n-2;j++)
+//             {
+//                 for(int k=j+1;k<n-1;k++)
+//                 {
+//                     for(int l=k+1;l<n;l++)
+//                     {
+//                         if(nums[i]+nums[j]+nums[k]+nums[l]==target)
+//                         {
+//                             List<Integer> quadruplet = Arrays.asList(nums[i],nums[j],nums[k],nums[l]);
+//                             Collections.sort(quadruplet);
+//                             String key = quadruplet.toString();
+//                             if(!seen.contains(key))
+//                             {
+//                                 seen.add(key);
+//                                 quadruplets.add(quadruplet);
+//                             }
+
+//                         }
+                      
+//                     }
+//                 }
+//             }
+//         }
+//         return quadruplets;
+        
+//     }
+// }
+
+
+//Optimal Solution: 2 pointers approach
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>(); // List to store unique quadruplets
+        int n = nums.length;
+
+        // If array has fewer than 4 elements, we can't have a quadruplet
+        if (nums == null || n < 4) return result;
+
+        // Sort the array to handle duplicates easily
+        Arrays.sort(nums);
+
+        // First loop to fix the first number
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // Skip duplicate first numbers
+
+            // Second loop to fix the second number
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue; // Skip duplicate second numbers
+
+                // Use two pointers to find the remaining two numbers
+                int left = j + 1;
+                int right = n - 1;
+
+                while (left < right) {
+                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+
+                    if (sum == target) {
+                        // We found a quadruplet
+                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+
+                        // Move both pointers to the next unique numbers
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+
+                        left++;
+                        right--;
+                    } else if (sum < target) {
+                        left++; // Increase sum by moving the left pointer to the right
+                    } else {
+                        right--; // Decrease sum by moving the right pointer to the left
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+}
+// Time Complexity: O(N3), where N = size of the array.
+// Reason: Each of the pointers i and j, is running for approximately N times. And both the pointers k and l combined can run for approximately N times including the operation of skipping duplicates. So the total time complexity will be O(N3). 
+
+// Space Complexity: O(no. of quadruplets), This space is only used to store the answer. We are not using any extra space to solve this problem. So, from that perspective, space complexity can be written as O(1).

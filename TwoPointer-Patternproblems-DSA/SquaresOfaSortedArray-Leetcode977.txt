@@ -1,0 +1,52 @@
+// class Solution {
+//     public int[] sortedSquares(int[] nums) {
+//         //Step1: take 2 pointers one starts from beginning and another from end low=0,high=num.length-1
+//         //Return type is array so we need a pointer inside that also say nextHighestIndex=nums.length-1
+        
+
+//         //Declaring variables
+//         int n=nums.length;
+//         int left=0;
+//         int right=nums.length-1;
+//         int nextHighestIndex=n-1;
+
+//         //Declaring a new array
+//         int[] squares = new int[n];
+        
+//         while(left<=right)
+//         {
+//             int leftsquare=nums[left]*nums[left];
+//             int rightsquare=nums[right]*nums[right];
+
+//             if (leftsquare > rightsquare) {
+//         // If the square of the value at the left pointer is greater, store it in the squares array
+//         // at the current highestSquareIdx and move the left pointer to the right.
+//         squares[nextHighestIndex--] = leftsquare;
+//         left++;
+//       } else {
+//         // If the square of the value at the right pointer is greater or equal, store it in the squares array
+//         // at the current highestSquareIdx and move the right pointer to the left.
+//         squares[nextHighestIndex--] = rightsquare;
+//         right--;
+//       }
+//     }
+//     return squares;
+// }
+// }
+
+//Approach 1 Brute force Time complexity as its using sort O(NlogN) Space complexity is O(N) as the o/p is stored/returned in a new array
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        // Step 1: Square each element in the array
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = nums[i] * nums[i];
+        }
+
+        // Step 2: Sort the squared array
+        Arrays.sort(nums);
+
+        // Step 3: Return the sorted array
+        return nums;
+    }
+}
+ 
